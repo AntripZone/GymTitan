@@ -1,11 +1,2 @@
 node_modules
-<<<<<<< Updated upstream
-/src/generated/prisma
 .env
-.claude
-.windsurf
-.agents
-=======
-.env
-/generated/prisma
->>>>>>> Stashed changes
