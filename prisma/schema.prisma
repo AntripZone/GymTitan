@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum EstadoSocio {
+  ASISTIO
+  FALTO
+}
+
+enum Rol {
+  RECEPCIONISTA
+  ENTRENADORES
+  ADMINISTRACION
+}
+
+model AdquisicionDePlan {
+  id           Int      @id @default(autoincrement())
+  fecha_inicio DateTime @map("fecha_inicio")
+  fecha_fin    DateTime @map("fecha_fin")
+
+  socioId Int    @map("socio_Id")
+  socio   Socios @relation(fields: [socioId], references: [id], onDelete: Cascade)
+
+  planId Int    @map("planes_Id")
+  plan   Planes @relation(fields: [planId], references: [id], onDelete: Cascade)
+}
+
+model Planes {
+  id                 Int                 @id @default(autoincrement())
+  nombre             String              @db.VarChar(100)
+  descripcion        String              @db.VarChar(100)
+  estado             String              @default("Activo")
+  creadoEn           DateTime            @default(now()) @map("creado_en")
+  adquisicionDePlans AdquisicionDePlan[]
+}
+
+model Socios {
+  id                     Int                     @id @default(autoincrement())
+  nombre                 String                  @db.VarChar(100)
+  apellido               String                  @db.VarChar(100)
+  email                  String                  @unique @db.VarChar(150)
+  telefono               String                  @db.VarChar(20)
+  fechaNacimiento        DateTime                @map("fecha_nacimiento") @db.Date
+  direccion              String?                 @db.VarChar(255)
+  fechaRegistro          DateTime                @default(now()) @map("fecha_registro")
+  adquisicionDePlans     AdquisicionDePlan[]
+  sesionesEntrenamientos SesionesEntrenamiento[]
+
+  @@map("socios")
+}
+
+model SesionesEntrenamiento {
+  id        Int         @id @default(autoincrement())
+  fechaHora DateTime    @map("fecha_hora")
+  estado    EstadoSocio
+
+  socioId Int    @map("socio_Id")
+  socio   Socios @relation(fields: [socioId], references: [id], onDelete: Cascade)
+
+  // Evita doble reserva del mismo socio en el mismo horario
+  @@unique([socioId, fechaHora])
+  // Agenda del socio por rango de fechas
+  @@index([socioId, fechaHora])
+  @@map("sesionesEntrenamiento")
+}
+
+model Usuario {
+  id           Int      @id @default(autoincrement())
+  nombre       String   @db.VarChar(255)
+  email        String   @unique @db.VarChar(150)
+  passwordHash String   @map("password_hash")
+  rol          Rol
+  creadoEn     DateTime @default(now()) @map("creado_en")
+}
