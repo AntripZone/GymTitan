@@ -23,4 +23,21 @@ export const planesModel = {
       where: { id },
     });
   },
+
+  updatePlan: async (id: number, data: PlanInput) => {
+    return await prisma.planes.update({
+      where: { id },
+      data: {
+        nombre: data.nombre,
+        descripcion: data.descripcion,
+        estado: data.estado ?? "Activo",
+      },
+    });
+  },
+
+  deletePlan: async (id: number) => {
+    return await prisma.planes.delete({
+      where: { id },
+    });
+  },
 };
