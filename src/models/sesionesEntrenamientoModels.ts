@@ -1,4 +1,4 @@
-import prisma from "../config/prisma";
+import { prisma } from "../config/prisma";
 
 export const sesionEntrenamientoModel = {
   getAll: async () => {
@@ -7,14 +7,9 @@ export const sesionEntrenamientoModel = {
         socio: true,
         entrenador: true,
       },
-      orderBy: [
-        {
-          fecha: "asc",
-        },
-        {
-          hora: "asc",
-        },
-      ],
+      orderBy: {
+        fechaHora: "asc",
+      },
     });
   },
 
@@ -31,18 +26,15 @@ export const sesionEntrenamientoModel = {
   },
 
   create: async (data: {
-    fecha: Date;
-    hora: Date;
     socioId: number;
     entrenadorId: number;
+    fechaHora: Date;
   }) => {
     return await prisma.sesionEntrenamiento.create({
       data: {
-        fecha: data.fecha,
-        hora: data.hora,
         socioId: data.socioId,
         entrenadorId: data.entrenadorId,
-        estado: "PROGRAMADA",
+        fechaHora: data.fechaHora,
       },
       include: {
         socio: true,
@@ -54,10 +46,9 @@ export const sesionEntrenamientoModel = {
   update: async (
     id: number,
     data: {
-      fecha?: Date;
-      hora?: Date;
       socioId?: number;
       entrenadorId?: number;
+      fechaHora?: Date;
     },
   ) => {
     return await prisma.sesionEntrenamiento.update({
@@ -72,17 +63,20 @@ export const sesionEntrenamientoModel = {
     });
   },
 
-  getSesionesDelEntrenador: async (entrenadorId: number, fecha: Date) => {
+  getSesionesDelDia: async (entrenadorId: number, inicio: Date, fin: Date) => {
     return await prisma.sesionEntrenamiento.findMany({
       where: {
         entrenadorId,
-        fecha,
+        fechaHora: {
+          gte: inicio,
+          lte: fin,
+        },
       },
       include: {
         socio: true,
       },
       orderBy: {
-        hora: "asc",
+        fechaHora: "asc",
       },
     });
   },
@@ -94,6 +88,10 @@ export const sesionEntrenamientoModel = {
       },
       data: {
         estado,
+      },
+      include: {
+        socio: true,
+        entrenador: true,
       },
     });
   },

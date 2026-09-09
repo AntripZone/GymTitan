@@ -24,6 +24,14 @@ router.post(
   sociosController.create,
 );
 
+router.put(
+  "/",
+  verificarToken,
+  autorizar("RECEPCION", "ADMINISTRACION"),
+  validarSocio,
+  sociosController.update,
+);
+
 router.get(
   "/",
   verificarToken,

@@ -2,6 +2,8 @@ import express from "express";
 import authRouter from "./routes/authRoutes";
 import socioRouter from "./routes/socioRoutes";
 import usuarioRouter from "./routes/userRoutes";
+import planesRouter from "./routes/planesRoutes";
+import sesionEntrenamientoRouter from "./routes/sesionesEntrenamientoRoutes";
 
 import swaggerUi from "swagger-ui-express";
 import fs from "node:fs";
@@ -23,6 +25,8 @@ if (fs.existsSync(swaggerDocumentPath)) {
 app.use("/auth", authRouter);
 app.use("/socios", socioRouter);
 app.use("/usuarios", usuarioRouter);
+app.use("/planes", planesRouter);
+app.use("/sesionEntrenamiento", sesionEntrenamientoRouter);
 
 app.listen(3000, () => {
   console.log(`servidor corriendo en http://localhost:3000`);

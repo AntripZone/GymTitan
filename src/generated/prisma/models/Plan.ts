@@ -41,6 +41,7 @@ export type PlanMinAggregateOutputType = {
   nombre: string | null
   descripcion: string | null
   precioMes: runtime.Decimal | null
+  estado: boolean | null
 }
 
 export type PlanMaxAggregateOutputType = {
@@ -48,6 +49,7 @@ export type PlanMaxAggregateOutputType = {
   nombre: string | null
   descripcion: string | null
   precioMes: runtime.Decimal | null
+  estado: boolean | null
 }
 
 export type PlanCountAggregateOutputType = {
@@ -55,6 +57,7 @@ export type PlanCountAggregateOutputType = {
   nombre: number
   descripcion: number
   precioMes: number
+  estado: number
   _all: number
 }
 
@@ -74,6 +77,7 @@ export type PlanMinAggregateInputType = {
   nombre?: true
   descripcion?: true
   precioMes?: true
+  estado?: true
 }
 
 export type PlanMaxAggregateInputType = {
@@ -81,6 +85,7 @@ export type PlanMaxAggregateInputType = {
   nombre?: true
   descripcion?: true
   precioMes?: true
+  estado?: true
 }
 
 export type PlanCountAggregateInputType = {
@@ -88,6 +93,7 @@ export type PlanCountAggregateInputType = {
   nombre?: true
   descripcion?: true
   precioMes?: true
+  estado?: true
   _all?: true
 }
 
@@ -182,6 +188,7 @@ export type PlanGroupByOutputType = {
   nombre: string
   descripcion: string | null
   precioMes: runtime.Decimal
+  estado: boolean
   _count: PlanCountAggregateOutputType | null
   _avg: PlanAvgAggregateOutputType | null
   _sum: PlanSumAggregateOutputType | null
@@ -212,6 +219,7 @@ export type PlanWhereInput = {
   nombre?: Prisma.StringFilter<"Plan"> | string
   descripcion?: Prisma.StringNullableFilter<"Plan"> | string | null
   precioMes?: Prisma.DecimalFilter<"Plan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estado?: Prisma.BoolFilter<"Plan"> | boolean
   membresias?: Prisma.MembresiaListRelationFilter
 }
 
@@ -220,6 +228,7 @@ export type PlanOrderByWithRelationInput = {
   nombre?: Prisma.SortOrder
   descripcion?: Prisma.SortOrderInput | Prisma.SortOrder
   precioMes?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
   membresias?: Prisma.MembresiaOrderByRelationAggregateInput
 }
 
@@ -231,6 +240,7 @@ export type PlanWhereUniqueInput = Prisma.AtLeast<{
   nombre?: Prisma.StringFilter<"Plan"> | string
   descripcion?: Prisma.StringNullableFilter<"Plan"> | string | null
   precioMes?: Prisma.DecimalFilter<"Plan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estado?: Prisma.BoolFilter<"Plan"> | boolean
   membresias?: Prisma.MembresiaListRelationFilter
 }, "id">
 
@@ -239,6 +249,7 @@ export type PlanOrderByWithAggregationInput = {
   nombre?: Prisma.SortOrder
   descripcion?: Prisma.SortOrderInput | Prisma.SortOrder
   precioMes?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
   _count?: Prisma.PlanCountOrderByAggregateInput
   _avg?: Prisma.PlanAvgOrderByAggregateInput
   _max?: Prisma.PlanMaxOrderByAggregateInput
@@ -254,12 +265,14 @@ export type PlanScalarWhereWithAggregatesInput = {
   nombre?: Prisma.StringWithAggregatesFilter<"Plan"> | string
   descripcion?: Prisma.StringNullableWithAggregatesFilter<"Plan"> | string | null
   precioMes?: Prisma.DecimalWithAggregatesFilter<"Plan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estado?: Prisma.BoolWithAggregatesFilter<"Plan"> | boolean
 }
 
 export type PlanCreateInput = {
   nombre: string
   descripcion?: string | null
   precioMes: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estado?: boolean
   membresias?: Prisma.MembresiaCreateNestedManyWithoutPlanInput
 }
 
@@ -268,6 +281,7 @@ export type PlanUncheckedCreateInput = {
   nombre: string
   descripcion?: string | null
   precioMes: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estado?: boolean
   membresias?: Prisma.MembresiaUncheckedCreateNestedManyWithoutPlanInput
 }
 
@@ -275,6 +289,7 @@ export type PlanUpdateInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   precioMes?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   membresias?: Prisma.MembresiaUpdateManyWithoutPlanNestedInput
 }
 
@@ -283,6 +298,7 @@ export type PlanUncheckedUpdateInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   precioMes?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   membresias?: Prisma.MembresiaUncheckedUpdateManyWithoutPlanNestedInput
 }
 
@@ -291,12 +307,14 @@ export type PlanCreateManyInput = {
   nombre: string
   descripcion?: string | null
   precioMes: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estado?: boolean
 }
 
 export type PlanUpdateManyMutationInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   precioMes?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PlanUncheckedUpdateManyInput = {
@@ -304,6 +322,7 @@ export type PlanUncheckedUpdateManyInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   precioMes?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PlanCountOrderByAggregateInput = {
@@ -311,6 +330,7 @@ export type PlanCountOrderByAggregateInput = {
   nombre?: Prisma.SortOrder
   descripcion?: Prisma.SortOrder
   precioMes?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
 }
 
 export type PlanAvgOrderByAggregateInput = {
@@ -323,6 +343,7 @@ export type PlanMaxOrderByAggregateInput = {
   nombre?: Prisma.SortOrder
   descripcion?: Prisma.SortOrder
   precioMes?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
 }
 
 export type PlanMinOrderByAggregateInput = {
@@ -330,6 +351,7 @@ export type PlanMinOrderByAggregateInput = {
   nombre?: Prisma.SortOrder
   descripcion?: Prisma.SortOrder
   precioMes?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
 }
 
 export type PlanSumOrderByAggregateInput = {
@@ -372,6 +394,7 @@ export type PlanCreateWithoutMembresiasInput = {
   nombre: string
   descripcion?: string | null
   precioMes: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estado?: boolean
 }
 
 export type PlanUncheckedCreateWithoutMembresiasInput = {
@@ -379,6 +402,7 @@ export type PlanUncheckedCreateWithoutMembresiasInput = {
   nombre: string
   descripcion?: string | null
   precioMes: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estado?: boolean
 }
 
 export type PlanCreateOrConnectWithoutMembresiasInput = {
@@ -401,6 +425,7 @@ export type PlanUpdateWithoutMembresiasInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   precioMes?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PlanUncheckedUpdateWithoutMembresiasInput = {
@@ -408,6 +433,7 @@ export type PlanUncheckedUpdateWithoutMembresiasInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   precioMes?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -446,6 +472,7 @@ export type PlanSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   nombre?: boolean
   descripcion?: boolean
   precioMes?: boolean
+  estado?: boolean
   membresias?: boolean | Prisma.Plan$membresiasArgs<ExtArgs>
   _count?: boolean | Prisma.PlanCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["plan"]>
@@ -455,6 +482,7 @@ export type PlanSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   nombre?: boolean
   descripcion?: boolean
   precioMes?: boolean
+  estado?: boolean
 }, ExtArgs["result"]["plan"]>
 
 export type PlanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -462,6 +490,7 @@ export type PlanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   nombre?: boolean
   descripcion?: boolean
   precioMes?: boolean
+  estado?: boolean
 }, ExtArgs["result"]["plan"]>
 
 export type PlanSelectScalar = {
@@ -469,9 +498,10 @@ export type PlanSelectScalar = {
   nombre?: boolean
   descripcion?: boolean
   precioMes?: boolean
+  estado?: boolean
 }
 
-export type PlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "descripcion" | "precioMes", ExtArgs["result"]["plan"]>
+export type PlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "descripcion" | "precioMes" | "estado", ExtArgs["result"]["plan"]>
 export type PlanInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   membresias?: boolean | Prisma.Plan$membresiasArgs<ExtArgs>
   _count?: boolean | Prisma.PlanCountOutputTypeDefaultArgs<ExtArgs>
@@ -489,6 +519,7 @@ export type $PlanPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     nombre: string
     descripcion: string | null
     precioMes: runtime.Decimal
+    estado: boolean
   }, ExtArgs["result"]["plan"]>
   composites: {}
 }
@@ -917,6 +948,7 @@ export interface PlanFieldRefs {
   readonly nombre: Prisma.FieldRef<"Plan", 'String'>
   readonly descripcion: Prisma.FieldRef<"Plan", 'String'>
   readonly precioMes: Prisma.FieldRef<"Plan", 'Decimal'>
+  readonly estado: Prisma.FieldRef<"Plan", 'Boolean'>
 }
     
 

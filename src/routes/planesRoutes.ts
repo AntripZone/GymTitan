@@ -9,7 +9,7 @@ const router = Router();
 router.post(
   "/",
   verificarToken,
-  autorizar("RECEPCIONISTA"),
+  autorizar("ADMINISTRACION"),
   validatePlan,
   planesController.create,
 );
@@ -17,15 +17,30 @@ router.post(
 router.get(
   "/",
   verificarToken,
-  autorizar("RECEPCIONISTA"),
+  autorizar("RECEPCION"),
   planesController.getAll,
 );
 
 router.get(
   "/:id",
   verificarToken,
-  autorizar("RECEPCIONISTA"),
+  autorizar("RECEPCION"),
   planesController.getById,
+);
+
+router.put(
+  "/:id",
+  verificarToken,
+  autorizar("ADMINISTRACION"),
+  validatePlan,
+  planesController.update,
+);
+
+router.delete(
+  "/:id",
+  verificarToken,
+  autorizar("ADMINISTRACION"),
+  planesController.delete,
 );
 
 export default router;

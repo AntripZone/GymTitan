@@ -3,8 +3,12 @@ import { z } from "zod";
 
 export const planSchema = z.object({
   nombre: z.string().trim().min(1, "El nombre es obligatorio"),
+  precioMes: z.coerce
+    .number({ message: "El precio no es un número válido" })
+    .positive("El precio debe ser mayor a cero")
+    .max(99999999.99, "El precio es demasiado alto"),
   descripcion: z.string().trim().min(1, "La descripcion es obligatoria"),
-  estado: z.string().trim().optional(),
+  estado: z.boolean().optional(),
 });
 export type PlanInput = z.infer<typeof planSchema>;
 

@@ -49,7 +49,7 @@ model Plan {
   nombre       String
   descripcion  String?
   precioMes    Decimal  @map("precio_mes")  @db.Decimal(10,2)
-
+  estado Boolean @default(true)
 
   membresias Membresia[]
 

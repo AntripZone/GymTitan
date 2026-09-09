@@ -69,7 +69,12 @@ export const userModel = {
   actualizar: async (id: number, data: ActualizarUsuario) => {
     return await prisma.usuario.update({
       where: { id },
-      data,
+      data: {
+        ...(data.nombre !== undefined && { nombre: data.nombre }),
+        ...(data.apellido !== undefined && { apellido: data.apellido }),
+        ...(data.email !== undefined && { email: data.email }),
+        ...(data.rol !== undefined && { rol: data.rol }),
+      },
       select: {
         id: true,
         nombre: true,

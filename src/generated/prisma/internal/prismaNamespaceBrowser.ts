@@ -92,7 +92,8 @@ export const PlanScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
   descripcion: 'descripcion',
-  precioMes: 'precioMes'
+  precioMes: 'precioMes',
+  estado: 'estado'
 } as const
 
 export type PlanScalarFieldEnum = (typeof PlanScalarFieldEnum)[keyof typeof PlanScalarFieldEnum]
