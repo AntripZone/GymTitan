@@ -1,43 +1,26 @@
 import { prisma } from "../config/prisma.js";
-import type { PacienteInput } from "../middlewares/validarPaciente.js";
+import type { PlanInput } from "../middlewares/validarPlan.js";
 
-export const pacienteModel = {
-  createPaciente: async (data: PacienteInput) => {
-    return await prisma.paciente.create({
+export const planesModel = {
+  createPlan: async (data: PlanInput) => {
+    return await prisma.planes.create({
       data: {
         nombre: data.nombre,
-        apellido: data.apellido,
-        email: data.email,
-        telefono: data.telefono,
-        fechaNacimiento: data.fechaNacimiento,
-        direccion: data.direccion ?? null,
+        descripcion: data.descripcion,
+        estado: data.estado ?? "Activo",
       },
     });
   },
 
-  getAllPacientes: async () => {
-    return await prisma.paciente.findMany({
-      orderBy: { apellido: "asc" },
+  getAllPlanes: async () => {
+    return await prisma.planes.findMany({
+      orderBy: { nombre: "asc" },
     });
   },
 
-  getPacienteById: async (id: number) => {
-    return await prisma.paciente.findUnique({
+  getPlanById: async (id: number) => {
+    return await prisma.planes.findUnique({
       where: { id },
-      include: {
-        citas: {
-          orderBy: { fechaHora: "desc" },
-          include: {
-            medico: {
-              include: { especialidad: true },
-            },
-          },
-        },
-      },
     });
-  },
-
-  getPacienteByEmail: async (email: string) => {
-    return await prisma.paciente.findUnique({ where: { email } });
   },
 };
