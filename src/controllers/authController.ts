@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { userModel } from "../models/usuariosModels.js";
+import { userModel } from "../models/userModels.js";
 import type { RegistroInput, LoginInput } from "../middlewares/validarAuth.js";
 
 export const authController = {
@@ -35,13 +35,11 @@ export const authController = {
         req.body as RegistroInput;
       const existeUsuario = await userModel.validarCorreoDuplicado(email);
       if (existeUsuario)
-        return res
-          .status(409)
-          .json({
-            message: existeUsuario.estado
-              ? "Ya existe un usuario con ese correo"
-              : "Ese correo pertenece a una cuenta dada de baja",
-          });
+        return res.status(409).json({
+          message: existeUsuario.estado
+            ? "Ya existe un usuario con ese correo"
+            : "Ese correo pertenece a una cuenta dada de baja",
+        });
 
       const passwordHash = await bcrypt.hash(password, 10);
       const usuario = await userModel.create({

@@ -11,6 +11,7 @@ const doc = {
   ],
   tags: [
     { name: "Auth", description: "Registro e inicio de sesión" },
+    { name: "Usuarios", description: "Gestión del personal del gimnasio" },
     { name: "Socios", description: "Módulo de Socios" },
   ],
   components: {

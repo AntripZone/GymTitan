@@ -10,10 +10,10 @@ export interface RegistrarUsuario {
 }
 
 export interface ActualizarUsuario {
-  nombre?: string;
-  apellido?: string;
-  email?: string;
-  rol?: Rol;
+  nombre?: string | undefined;
+  apellido?: string | undefined;
+  email?: string | undefined;
+  rol?: Rol | undefined;
 }
 
 export const userModel = {
@@ -21,6 +21,20 @@ export const userModel = {
     return await prisma.usuario.findMany({
       where: rol ? { rol } : {},
       orderBy: [{ apellido: "asc" }, { nombre: "asc" }],
+      select: {
+        id: true,
+        nombre: true,
+        apellido: true,
+        email: true,
+        rol: true,
+        estado: true,
+        creadoEn: true,
+      },
+    });
+  },
+  getById: async (id: number) => {
+    return await prisma.usuario.findFirst({
+      where: { id, estado: true },
       select: {
         id: true,
         nombre: true,
