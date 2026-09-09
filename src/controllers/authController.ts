@@ -8,7 +8,7 @@ export const authController = {
   register: async (req: Request, res: Response) => {
     try {
       /*
-    #swagger.tags = ['Auth']
+   #swagger.tags = ['Auth']
     #swagger.summary = 'Registra una cuenta de acceso'
     #swagger.requestBody = {
       required: true,
@@ -33,13 +33,15 @@ export const authController = {
   */
       const { nombre, apellido, email, password, rol } =
         req.body as RegistroInput;
-      const existeUsusario = await userModel.validarCorreoDuplicado(email);
-      if (existeUsusario)
-        return res.status(409).json({
-          message: existeUsusario.estado
-            ? "Ya existe un usuario con ese correo"
-            : "Ya existe un usuario con ese correo",
-        });
+      const existeUsuario = await userModel.validarCorreoDuplicado(email);
+      if (existeUsuario)
+        return res
+          .status(409)
+          .json({
+            message: existeUsuario.estado
+              ? "Ya existe un usuario con ese correo"
+              : "Ese correo pertenece a una cuenta dada de baja",
+          });
 
       const passwordHash = await bcrypt.hash(password, 10);
       const usuario = await userModel.create({
@@ -60,7 +62,7 @@ export const authController = {
   login: async (req: Request, res: Response) => {
     try {
       /*
-    #swagger.tags = ['Auth']
+     #swagger.tags = ['Auth']
     #swagger.summary = 'Inicia sesión y devuelve un token JWT'
     #swagger.requestBody = {
       required: true,
@@ -93,12 +95,7 @@ export const authController = {
       );
       return res.json({
         token,
-        usuario: {
-          id: usuario.id,
-          nombre: usuario.nombre,
-          email: usuario.email,
-          rol: usuario.rol,
-        },
+        usuario: { id: usuario.id, email: usuario.email, rol: usuario.rol },
       });
     } catch (error) {
       console.error("POST /api/auth/login: ", error);
