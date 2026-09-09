@@ -9,18 +9,27 @@
 * 🟢 You can import this file directly.
 */
 
-export const EstadoSocio = {
+export const Rol = {
+  ADMINISTRACION: 'ADMINISTRACION',
+  RECEPCION: 'RECEPCION',
+  ENTRENADOR: 'ENTRENADOR'
+} as const
+
+export type Rol = (typeof Rol)[keyof typeof Rol]
+
+
+export const EstadoMembresia = {
+  ACTIVA: 'ACTIVA',
+  SUSPENDIDA: 'SUSPENDIDA'
+} as const
+
+export type EstadoMembresia = (typeof EstadoMembresia)[keyof typeof EstadoMembresia]
+
+
+export const EstadoSesion = {
+  PROGRAMADA: 'PROGRAMADA',
   ASISTIO: 'ASISTIO',
   FALTO: 'FALTO'
 } as const
 
-export type EstadoSocio = (typeof EstadoSocio)[keyof typeof EstadoSocio]
-
-
-export const Rol = {
-  RECEPCIONISTA: 'RECEPCIONISTA',
-  ENTRENADORES: 'ENTRENADORES',
-  ADMINISTRACION: 'ADMINISTRACION'
-} as const
-
-export type Rol = (typeof Rol)[keyof typeof Rol]
+export type EstadoSesion = (typeof EstadoSesion)[keyof typeof EstadoSesion]

@@ -1,85 +1,102 @@
 import { prisma } from "../config/prisma.js";
-import type { CitaInput } from "../middlewares/validarCita.js";
+import { Rol } from "../generated/prisma/enums";
 
-export const citaModel = {
-  createCita: async (data: CitaInput) => {
-    return await prisma.cita.create({
-      data: {
-        pacienteId: data.pacienteId,
-        medicoId: data.medicoId,
-        fechaHora: data.fechaHora,
-        motivo: data.motivo ?? null,
-      },
-      include: {
-        paciente: {
-          select: {
-            id: true,
-            nombre: true,
-            apellido: true,
-          },
-        },
-        medico: {
-          select: {
-            id: true,
-            nombre: true,
-            apellido: true,
-            especialidad: {
-              select: { id: true, nombre: true },
-            },
-          },
-        },
+export interface RegistrarUsuario {
+  nombre: string;
+  apellido: string;
+  email: string;
+  passwordHash: string;
+  rol: Rol;
+}
+
+export interface ActualizarUsuario {
+  nombre?: string;
+  apellido?: string;
+  email?: string;
+  rol?: Rol;
+}
+
+export const userModel = {
+  getAll: async (rol?: Rol) => {
+    return await prisma.usuario.findMany({
+      where: rol ? { rol } : {},
+      orderBy: [{ apellido: "asc" }, { nombre: "asc" }],
+      select: {
+        id: true,
+        nombre: true,
+        apellido: true,
+        email: true,
+        rol: true,
+        estado: true,
+        creadoEn: true,
       },
     });
   },
-
-  getCitaById: async (id: number) => {
-    return await prisma.cita.findUnique({
+  validarCorreo: async (email: string) => {
+    return await prisma.usuario.findFirst({ where: { email, estado: true } });
+  },
+  validarCorreoDuplicado: async (email: string) => {
+    return await prisma.usuario.findUnique({ where: { email } });
+  },
+  create: async (data: RegistrarUsuario) => {
+    return await prisma.usuario.create({
+      data,
+      select: {
+        id: true,
+        nombre: true,
+        apellido: true,
+        email: true,
+        rol: true,
+        estado: true,
+        creadoEn: true,
+      },
+    });
+  },
+  actualizar: async (id: number, data: ActualizarUsuario) => {
+    return await prisma.usuario.update({
       where: { id },
-      include: {
-        paciente: true,
-        medico: true,
+      data,
+      select: {
+        id: true,
+        nombre: true,
+        apellido: true,
+        email: true,
+        rol: true,
+        creadoEn: true,
       },
     });
   },
-
-  choqueHorario: async (medicoId: number, fechaHora: Date) => {
-    return await prisma.cita.findFirst({
-      where: {
-        medicoId,
-        fechaHora,
-        estado: { not: "CANCELADA" },
-      },
-    });
-  },
-
-  updateEstado: async (id: number, estado: "COMPLETADA" | "CANCELADA") => {
-    return await prisma.cita.update({
+  actualizarPassword: async (id: number, passwordHash: string) => {
+    return await prisma.usuario.update({
       where: { id },
-      data: { estado },
+      data: { passwordHash },
+      select: { id: true, email: true },
     });
   },
-
-  resumenDelDia: async (fecha: Date) => {
-    const fechaInicio = new Date(fecha);
-    fechaInicio.setHours(0, 0, 0, 0);
-    const fechaFin = new Date(fecha);
-    fechaFin.setHours(23, 59, 59, 999);
-
-    const grupos = await prisma.cita.groupBy({
-      by: ["estado"],
-      where: { fechaHora: { gte: fechaInicio, lte: fechaFin } },
-      _count: { _all: true },
+  eliminar: async (id: number) => {
+    return await prisma.usuario.update({
+      where: { id },
+      data: { estado: false },
+      select: {
+        id: true,
+        nombre: true,
+        apellido: true,
+        email: true,
+        estado: true,
+      },
     });
-
-    const contar = (estado: "PROGRAMADA" | "COMPLETADA" | "CANCELADA") =>
-      grupos.find((g) => g.estado === estado)?._count._all ?? 0;
-
-    return {
-      fecha: fechaInicio.toISOString().split("T")[0],
-      completadas: contar("COMPLETADA"),
-      canceladas: contar("CANCELADA"),
-      programadas: contar("PROGRAMADA"),
-      total: grupos.reduce((acc: number, g) => acc + g._count._all, 0),
-    };
+  },
+  restaurar: async (id: number) => {
+    return await prisma.usuario.update({
+      where: { id },
+      data: { estado: true },
+      select: {
+        id: true,
+        nombre: true,
+        apellido: true,
+        email: true,
+        estado: true,
+      },
+    });
   },
 };

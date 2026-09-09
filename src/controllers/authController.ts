@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { prisma } from "../config/prisma.js";
+import { userModel } from "../models/usuariosModels.js";
 import type { RegistroInput, LoginInput } from "../middlewares/validarAuth.js";
 
 export const authController = {
@@ -16,11 +16,13 @@ export const authController = {
         "application/json": {
           schema: {
             type: "object",
-            required: ["email", "password", "rol"],
+            required: ["nombre", "apellido", "email", "password", "rol"],
             properties: {
-              email: { type: "string", example: "recepcion@clinica.com" },
+              nombre: { type: "string", example: "Carla" },
+              apellido: { type: "string", example: "Ríos" },
+              email: { type: "string", example: "recepcion@gym.com" },
               password: { type: "string", example: "recepcion123" },
-              rol: { type: "string", enum: ["RECEPCIONISTA", "MEDICO", "GERENCIA"], example: "RECEPCIONISTA" }
+              rol: { type: "string", enum: ["ADMINISTRACION", "RECEPCION", "ENTRENADOR"], example: "RECEPCION" }
             }
           }
         }
@@ -29,19 +31,23 @@ export const authController = {
     #swagger.responses[201] = { description: 'Usuario creado' }
     #swagger.responses[409] = { description: 'El correo ya está registrado' }
   */
-      const { email, password, rol } = req.body as RegistroInput;
-      const existeUsusario = await prisma.usuario.findUnique({
-        where: { email },
-      });
+      const { nombre, apellido, email, password, rol } =
+        req.body as RegistroInput;
+      const existeUsusario = await userModel.validarCorreoDuplicado(email);
       if (existeUsusario)
-        return res
-          .status(409)
-          .json({ message: "Ya existe un usuario con ese correo" });
+        return res.status(409).json({
+          message: existeUsusario.estado
+            ? "Ya existe un usuario con ese correo"
+            : "Ya existe un usuario con ese correo",
+        });
 
       const passwordHash = await bcrypt.hash(password, 10);
-      const usuario = await prisma.usuario.create({
-        data: { email, passwordHash, rol },
-        select: { id: true, email: true, rol: true },
+      const usuario = await userModel.create({
+        nombre,
+        apellido,
+        email,
+        passwordHash,
+        rol,
       });
 
       return res.status(201).json(usuario);
@@ -64,7 +70,7 @@ export const authController = {
             type: "object",
             required: ["email", "password"],
             properties: {
-              email: { type: "string", example: "recepcion@clinica.com" },
+              email: { type: "string", example: "recepcion@gym.com" },
               password: { type: "string", example: "recepcion123" }
             }
           }
@@ -75,7 +81,7 @@ export const authController = {
     #swagger.responses[401] = { description: 'Credenciales inválidas' }
   */
       const { email, password } = req.body as LoginInput;
-      const usuario = await prisma.usuario.findUnique({ where: { email } });
+      const usuario = await userModel.validarCorreo(email);
 
       if (!usuario || !(await bcrypt.compare(password, usuario.passwordHash)))
         return res.status(401).json({ message: "Credenciales invalidas" });
@@ -87,7 +93,12 @@ export const authController = {
       );
       return res.json({
         token,
-        usuario: { id: usuario.id, email: usuario.email, rol: usuario.rol },
+        usuario: {
+          id: usuario.id,
+          nombre: usuario.nombre,
+          email: usuario.email,
+          rol: usuario.rol,
+        },
       });
     } catch (error) {
       console.error("POST /api/auth/login: ", error);
