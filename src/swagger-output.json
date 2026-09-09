@@ -1,0 +1,306 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de gestion de GymTitan",
+    "description": "Documentacion generada automaticamente por swagger-autogen",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Servidor de desarrollo"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Registro e inicio de sesión"
+    },
+    {
+      "name": "Socios",
+      "description": "Módulo de Socios"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Registra una cuenta de acceso",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Usuario creado"
+          },
+          "409": {
+            "description": "El correo ya está registrado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "nombre",
+                  "apellido",
+                  "email",
+                  "password",
+                  "rol"
+                ],
+                "properties": {
+                  "nombre": {
+                    "type": "string",
+                    "example": "Carla"
+                  },
+                  "apellido": {
+                    "type": "string",
+                    "example": "Ríos"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "recepcion@gym.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "recepcion123"
+                  },
+                  "rol": {
+                    "type": "string",
+                    "enum": [
+                      "ADMINISTRACION",
+                      "RECEPCION",
+                      "ENTRENADOR"
+                    ],
+                    "example": "RECEPCION"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Inicia sesión y devuelve un token JWT",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Token emitido"
+          },
+          "401": {
+            "description": "Credenciales inválidas"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "recepcion@gym.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "recepcion123"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Devuelve el usuario del token actual",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/socios/por-vencer": {
+      "get": {
+        "tags": [
+          "Socios"
+        ],
+        "summary": "Socios cuya membresía vence en los próximos días",
+        "description": "",
+        "parameters": [
+          {
+            "name": "dias",
+            "in": "query",
+            "description": "Días hacia adelante (por defecto 5)",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/socios/": {
+      "post": {
+        "tags": [
+          "Socios"
+        ],
+        "summary": "Inscribe un socio nuevo",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Socio inscrito"
+          },
+          "400": {
+            "description": "Datos inválidos"
+          },
+          "401": {
+            "description": "Token no proporcionado o inválido"
+          },
+          "403": {
+            "description": "El rol no tiene permiso"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "nombre",
+                  "apellido",
+                  "ci"
+                ],
+                "properties": {
+                  "nombre": {
+                    "type": "string",
+                    "example": "Valeria"
+                  },
+                  "apellido": {
+                    "type": "string",
+                    "example": "Ccahuana"
+                  },
+                  "telefono": {
+                    "type": "string",
+                    "example": "976543210"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "valeria@example.com"
+                  },
+                  "fechaNacimiento": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "1995-02-14"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Socios"
+        ],
+        "summary": "Lista los socios con su membresía más reciente",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Token JWT obtenido en POST /api/auth/login"
+      }
+    }
+  }
+}

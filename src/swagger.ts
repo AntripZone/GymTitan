@@ -2,7 +2,7 @@ import swaggerAutogen from "swagger-autogen";
 
 const doc = {
   info: {
-    title: "API de gestion de Clinical Integral AlvaClinic",
+    title: "API de gestion de GymTitan",
     description: "Documentacion generada automaticamente por swagger-autogen",
     version: "1.0.0",
   },
