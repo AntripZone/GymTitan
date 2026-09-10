@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { planesController } from "../controllers/planesController.js";
-import { validatePlan } from "../middlewares/validarPlan.js";
+import { validate } from "../middlewares/validate.middleware.js";
+import {
+  createPlanesSchema,
+  updatePlanSchema,
+} from "../schemas/planesSchema.js";
 import { verificarToken } from "../middlewares/authMiddleware.js";
 import { autorizar } from "../middlewares/authRolMiddleware.js";
 
@@ -10,7 +14,7 @@ router.post(
   "/",
   verificarToken,
   autorizar("ADMINISTRACION"),
-  validatePlan,
+  validate(createPlanesSchema),
   planesController.create,
 );
 
@@ -32,7 +36,7 @@ router.put(
   "/:id",
   verificarToken,
   autorizar("ADMINISTRACION"),
-  validatePlan,
+  validate(updatePlanSchema),
   planesController.update,
 );
 
