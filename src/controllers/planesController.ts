@@ -20,7 +20,8 @@ export const planesController = {
               properties: {
                 nombre: { type: "string", example: "Plan Mensual" },
                 descripcion: { type: "string", example: "Acceso al gimnasio durante un mes" },
-                estado: { type: "string", example: "Activo" }
+                precioNes: { type: "number", example: 200 },
+                estado: { type: "string", example: true }
               }
             }
           }
@@ -138,9 +139,10 @@ export const planesController = {
                   type: "string",
                   example: "Acceso completo al gimnasio durante un mes"
                 },
+                precioNes: { type: "number", example: 200 },
                 estado: {
                   type: "string",
-                  example: "Activo"
+                  example: true
                 }
               }
             }

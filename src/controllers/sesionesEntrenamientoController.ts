@@ -4,6 +4,7 @@ import { prisma } from "../config/prisma";
 
 export const getAll = async (req: Request, res: Response): Promise<void> => {
   /*
+  #swagger.summary = "Obtener todas las sesiones creadas"
     #swagger.security = [{ "bearerAuth": [] }]
     #swagger.tags = ["Sesiones de Entrenamiento"]
     #swagger.description= "Permite ver todas las sesiones"
@@ -23,6 +24,7 @@ export const getAll = async (req: Request, res: Response): Promise<void> => {
 
 export const getById = async (req: Request, res: Response): Promise<void> => {
   /*
+  #swagger.summary = "Obtener una sesión de entrenamiento"
     #swagger.security = [{ "bearerAuth": [] }]
     #swagger.tags = ["Sesiones de Entrenamiento"]
     #swagger.description= "Permite ver una sesion de un socio por el id de la sesion"
@@ -51,6 +53,7 @@ export const getById = async (req: Request, res: Response): Promise<void> => {
 
 export const create = async (req: Request, res: Response): Promise<void> => {
   /*
+  #swagger.summary = "Agendar una sesión de entrenamiento"
     #swagger.security = [{ "bearerAuth": [] }]
     #swagger.tags = ["Sesiones de Entrenamiento"]
     #swagger.description= "Permite crear sesiones de entrenamiento"
@@ -102,6 +105,7 @@ export const create = async (req: Request, res: Response): Promise<void> => {
 
 export const update = async (req: Request, res: Response): Promise<void> => {
   /*
+  #swagger.summary = "Actualizar una sesión"
     #swagger.security = [{ "bearerAuth": [] }]
     #swagger.tags = ["Sesiones de Entrenamiento"]
     #swagger.description= "Permite actualizar sesiones de entrenamiento"
@@ -149,6 +153,7 @@ export const getSesionesDelDia = async (
   res: Response,
 ): Promise<void> => {
   /*
+  #swagger.summary = "Obtener mis sesiones del día"
     #swagger.security = [{ "bearerAuth": [] }]
     #swagger.tags = ["Sesiones de Entrenamiento"]
     #swagger.description= "Permite ver al entrenador sus sesiones del dia"
@@ -188,6 +193,7 @@ export const actualizarEstado = async (
   res: Response,
 ): Promise<void> => {
   /*
+  #swagger.summary = "Registrar asistencia de una sesión"
     #swagger.security = [{ "bearerAuth": [] }]
     #swagger.tags = ["Sesiones de Entrenamiento"]
     #swagger.description= "Permite actualizar el estado de la sesion si asistio o falto"
@@ -223,6 +229,7 @@ export const contarSesionesCompletadas = async (
   res: Response,
 ): Promise<void> => {
   /*
+  #swagger.summary = "Contar sesiones completadas por entrenador"
     #swagger.security = [{ "bearerAuth": [] }]
     #swagger.tags = ["Sesiones de Entrenamiento"]
     #swagger.description= "Permite ver el total de sesiones completadas"

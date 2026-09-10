@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { planesController } from "../controllers/planesController.js";
-import { validate } from "../middlewares/validate.middleware.js";
+import { validate } from "../middlewares/validateSE.js";
 import {
   createPlanesSchema,
   updatePlanSchema,
-} from "../schemas/planesSchema.js";
+} from "../schema/planesSchema.js";
 import { verificarToken } from "../middlewares/authMiddleware.js";
 import { autorizar } from "../middlewares/authRolMiddleware.js";
 

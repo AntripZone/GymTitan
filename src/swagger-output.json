@@ -666,9 +666,13 @@
                     "type": "string",
                     "example": "Acceso al gimnasio durante un mes"
                   },
+                  "precioNes": {
+                    "type": "number",
+                    "example": 200
+                  },
                   "estado": {
                     "type": "string",
-                    "example": "Activo"
+                    "example": true
                   }
                 }
               }
@@ -809,9 +813,13 @@
                     "type": "string",
                     "example": "Acceso completo al gimnasio durante un mes"
                   },
+                  "precioNes": {
+                    "type": "number",
+                    "example": 200
+                  },
                   "estado": {
                     "type": "string",
-                    "example": "Activo"
+                    "example": true
                   }
                 }
               }
@@ -869,6 +877,7 @@
         "tags": [
           "Sesiones de Entrenamiento"
         ],
+        "summary": "Obtener todas las sesiones creadas",
         "description": "Permite ver todas las sesiones",
         "responses": {
           "200": {
@@ -894,16 +903,23 @@
         "tags": [
           "Sesiones de Entrenamiento"
         ],
+        "summary": "Agendar una sesión de entrenamiento",
         "description": "Permite crear sesiones de entrenamiento",
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"
           },
           "403": {
             "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -941,6 +957,7 @@
         "tags": [
           "Sesiones de Entrenamiento"
         ],
+        "summary": "Obtener una sesión de entrenamiento",
         "description": "Permite ver una sesion de un socio por el id de la sesion",
         "parameters": [
           {
@@ -979,6 +996,7 @@
         "tags": [
           "Sesiones de Entrenamiento"
         ],
+        "summary": "Actualizar una sesión",
         "description": "Permite actualizar sesiones de entrenamiento",
         "parameters": [
           {
@@ -1036,6 +1054,7 @@
         "tags": [
           "Sesiones de Entrenamiento"
         ],
+        "summary": "Obtener mis sesiones del día",
         "description": "Permite ver al entrenador sus sesiones del dia",
         "parameters": [
           {
@@ -1083,6 +1102,7 @@
         "tags": [
           "Sesiones de Entrenamiento"
         ],
+        "summary": "Registrar asistencia de una sesión",
         "description": "Permite actualizar el estado de la sesion si asistio o falto",
         "parameters": [
           {
@@ -1137,6 +1157,7 @@
         "tags": [
           "Sesiones de Entrenamiento"
         ],
+        "summary": "Contar sesiones completadas por entrenador",
         "description": "Permite ver el total de sesiones completadas",
         "parameters": [
           {
