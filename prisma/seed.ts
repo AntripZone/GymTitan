@@ -44,13 +44,13 @@ async function main() {
       nombre: "Carla Ríos",
       email: "recepcion@gym.com",
       password: "Recepcion123!",
-      rol: "RECEPCIONISTA" as const,
+      rol: "RECEPCION" as const,
     },
     {
       nombre: "Bruno Salas",
       email: "entrenador@gym.com",
       password: "Entrenador123!",
-      rol: "ENTRENADORES" as const,
+      rol: "ENTRENADOR" as const,
     },
   ];
 

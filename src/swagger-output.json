@@ -1,0 +1,1183 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de gestion de GymTitan",
+    "description": "Documentacion generada automaticamente por swagger-autogen",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Servidor de desarrollo"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Registro e inicio de sesión"
+    },
+    {
+      "name": "Usuarios",
+      "description": "Gestión del personal del gimnasio"
+    },
+    {
+      "name": "Socios",
+      "description": "Módulo de Socios"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Registra una cuenta de acceso",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Usuario creado"
+          },
+          "409": {
+            "description": "El correo ya está registrado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "nombre",
+                  "apellido",
+                  "email",
+                  "password",
+                  "rol"
+                ],
+                "properties": {
+                  "nombre": {
+                    "type": "string",
+                    "example": "Carla"
+                  },
+                  "apellido": {
+                    "type": "string",
+                    "example": "Ríos"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "recepcion@gym.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "recepcion123"
+                  },
+                  "rol": {
+                    "type": "string",
+                    "enum": [
+                      "ADMINISTRACION",
+                      "RECEPCION",
+                      "ENTRENADOR"
+                    ],
+                    "example": "RECEPCION"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Inicia sesión y devuelve un token JWT",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Token emitido"
+          },
+          "401": {
+            "description": "Credenciales inválidas"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "recepcion@gym.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "recepcion123"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Devuelve el usuario del token actual",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/socios/por-vencer": {
+      "get": {
+        "tags": [
+          "Socios"
+        ],
+        "summary": "Socios cuya membresía vence en los próximos días",
+        "description": "",
+        "parameters": [
+          {
+            "name": "dias",
+            "in": "query",
+            "description": "Días hacia adelante (por defecto 5)",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/socios/": {
+      "post": {
+        "tags": [
+          "Socios"
+        ],
+        "summary": "Inscribe un socio nuevo",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Socio inscrito"
+          },
+          "400": {
+            "description": "Datos inválidos"
+          },
+          "401": {
+            "description": "Token no proporcionado o inválido"
+          },
+          "403": {
+            "description": "El rol no tiene permiso"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "nombre",
+                  "apellido",
+                  "ci"
+                ],
+                "properties": {
+                  "nombre": {
+                    "type": "string",
+                    "example": "Valeria"
+                  },
+                  "apellido": {
+                    "type": "string",
+                    "example": "Ccahuana"
+                  },
+                  "telefono": {
+                    "type": "string",
+                    "example": "976543210"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "valeria@example.com"
+                  },
+                  "fechaNacimiento": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "1995-02-14"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Socios"
+        ],
+        "summary": "Actualiza los datos de un socio",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id del socio",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Socio no encontrado"
+          },
+          "409": {
+            "description": "CI o correo en uso por otro socio"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Socios"
+        ],
+        "summary": "Lista los socios con su membresía más reciente",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/usuarios/": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Lista el personal, con filtro opcional por rol",
+        "description": "",
+        "parameters": [
+          {
+            "name": "rol",
+            "in": "query",
+            "description": "Filtra por rol",
+            "required": false,
+            "enum": [
+              "ADMINISTRACION",
+              "RECEPCION",
+              "ENTRENADOR"
+            ],
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Rol inválido"
+          },
+          "401": {
+            "description": "Token no proporcionado o inválido"
+          },
+          "403": {
+            "description": "El rol no tiene permiso"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/usuarios/{id}": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Devuelve un usuario por id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id del usuario"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Actualiza nombre, apellido, correo o rol de un usuario",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id del usuario"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          },
+          "409": {
+            "description": "Correo en uso o último administrador"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string",
+                    "example": "Carla"
+                  },
+                  "apellido": {
+                    "type": "string",
+                    "example": "Ríos Vega"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "carla.rios@gym.com"
+                  },
+                  "rol": {
+                    "type": "string",
+                    "enum": [
+                      "ADMINISTRACION",
+                      "RECEPCION",
+                      "ENTRENADOR"
+                    ],
+                    "example": "ADMINISTRACION"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Da de baja una cuenta de personal",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id del usuario"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          },
+          "409": {
+            "description": "Cuenta propia o último administrador"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/usuarios/{id}/restaurar": {
+      "patch": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Reactiva una cuenta dada de baja",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id del usuario"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/planes/": {
+      "post": {
+        "tags": [
+          "Planes"
+        ],
+        "summary": "Registra un plan nuevo",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Plan creado"
+          },
+          "400": {
+            "description": "Datos inválidos"
+          },
+          "401": {
+            "description": "Token no proporcionado o inválido"
+          },
+          "403": {
+            "description": "El rol no tiene permiso"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "nombre",
+                  "descripcion"
+                ],
+                "properties": {
+                  "nombre": {
+                    "type": "string",
+                    "example": "Plan Mensual"
+                  },
+                  "descripcion": {
+                    "type": "string",
+                    "example": "Acceso al gimnasio durante un mes"
+                  },
+                  "estado": {
+                    "type": "string",
+                    "example": "Activo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Planes"
+        ],
+        "summary": "Ver todos los planes",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Token no proporcionado o inválido"
+          },
+          "403": {
+            "description": "El rol no tiene permiso"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/planes/{id}": {
+      "get": {
+        "tags": [
+          "Planes"
+        ],
+        "summary": "Ver un plan por su id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id del plan"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Id inválido"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Plan no encontrado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Planes"
+        ],
+        "summary": "Actualiza un plan",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id del plan",
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plan actualizado correctamente"
+          },
+          "400": {
+            "description": "Id inválido o datos inválidos"
+          },
+          "401": {
+            "description": "Token no proporcionado o inválido"
+          },
+          "403": {
+            "description": "El rol no tiene permiso"
+          },
+          "404": {
+            "description": "Plan no encontrado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "nombre",
+                  "descripcion"
+                ],
+                "properties": {
+                  "nombre": {
+                    "type": "string",
+                    "example": "Plan Mensual VIP"
+                  },
+                  "descripcion": {
+                    "type": "string",
+                    "example": "Acceso completo al gimnasio durante un mes"
+                  },
+                  "estado": {
+                    "type": "string",
+                    "example": "Activo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Planes"
+        ],
+        "summary": "Elimina un plan",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id del plan",
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plan eliminado correctamente"
+          },
+          "400": {
+            "description": "Id inválido"
+          },
+          "401": {
+            "description": "Token no proporcionado o inválido"
+          },
+          "403": {
+            "description": "El rol no tiene permiso"
+          },
+          "404": {
+            "description": "Plan no encontrado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/sesionEntrenamiento/": {
+      "get": {
+        "tags": [
+          "Sesiones de Entrenamiento"
+        ],
+        "description": "Permite ver todas las sesiones",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Sesiones de Entrenamiento"
+        ],
+        "description": "Permite crear sesiones de entrenamiento",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "socioId": {
+                    "example": "any"
+                  },
+                  "entrenadorId": {
+                    "example": "any"
+                  },
+                  "fechaHora": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sesionEntrenamiento/{id}": {
+      "get": {
+        "tags": [
+          "Sesiones de Entrenamiento"
+        ],
+        "description": "Permite ver una sesion de un socio por el id de la sesion",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Sesiones de Entrenamiento"
+        ],
+        "description": "Permite actualizar sesiones de entrenamiento",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "socioId": {
+                    "example": "any"
+                  },
+                  "entrenadorId": {
+                    "example": "any"
+                  },
+                  "fechaHora": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sesionEntrenamiento/entrenador/{entrenadorId}": {
+      "get": {
+        "tags": [
+          "Sesiones de Entrenamiento"
+        ],
+        "description": "Permite ver al entrenador sus sesiones del dia",
+        "parameters": [
+          {
+            "name": "entrenadorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fecha",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/sesionEntrenamiento/{id}/estado": {
+      "patch": {
+        "tags": [
+          "Sesiones de Entrenamiento"
+        ],
+        "description": "Permite actualizar el estado de la sesion si asistio o falto",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "estado": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sesionEntrenamiento/entrenador/{entrenadorId}/completadas": {
+      "get": {
+        "tags": [
+          "Sesiones de Entrenamiento"
+        ],
+        "description": "Permite ver el total de sesiones completadas",
+        "parameters": [
+          {
+            "name": "entrenadorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Token JWT obtenido en POST /api/auth/login"
+      }
+    }
+  }
+}

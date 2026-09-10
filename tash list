@@ -1,0 +1,19 @@
+[33m11c8d9a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: pull: Fast-forward
+[33m545d075[m HEAD@{1}: pull: Fast-forward
+[33mc61cbe9[m HEAD@{2}: checkout: moving from Hector to main
+[33m84778d2[m[33m ([m[1;32mHector[m[33m)[m HEAD@{3}: pull origin main: Fast-forward
+[33me8bd650[m[33m ([m[1;32mFernando[m[33m)[m HEAD@{4}: checkout: moving from main to Hector
+[33mc61cbe9[m HEAD@{5}: commit: Cambios de Main
+[33me8bd650[m[33m ([m[1;32mFernando[m[33m)[m HEAD@{6}: checkout: moving from Hector to main
+[33me8bd650[m[33m ([m[1;32mFernando[m[33m)[m HEAD@{7}: checkout: moving from main to Hector
+[33me8bd650[m[33m ([m[1;32mFernando[m[33m)[m HEAD@{8}: checkout: moving from Hector to main
+[33me8bd650[m[33m ([m[1;32mFernando[m[33m)[m HEAD@{9}: pull origin main: Fast-forward
+[33m132658e[m[33m ([m[1;32mDavid[m[33m)[m HEAD@{10}: checkout: moving from main to Hector
+[33me8bd650[m[33m ([m[1;32mFernando[m[33m)[m HEAD@{11}: checkout: moving from Fernando to main
+[33me8bd650[m[33m ([m[1;32mFernando[m[33m)[m HEAD@{12}: checkout: moving from main to Fernando
+[33me8bd650[m[33m ([m[1;32mFernando[m[33m)[m HEAD@{13}: commit: asd
+[33meedfa1d[m HEAD@{14}: commit: asd
+[33m132658e[m[33m ([m[1;32mDavid[m[33m)[m HEAD@{15}: checkout: moving from David to main
+[33m132658e[m[33m ([m[1;32mDavid[m[33m)[m HEAD@{16}: checkout: moving from Hector to David
+[33m132658e[m[33m ([m[1;32mDavid[m[33m)[m HEAD@{17}: checkout: moving from David to Hector
+[33m132658e[m[33m ([m[1;32mDavid[m[33m)[m HEAD@{18}: commit (initial): se crea la rama David

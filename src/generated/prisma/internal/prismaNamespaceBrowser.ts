@@ -51,11 +51,11 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  AdquisicionDePlan: 'AdquisicionDePlan',
-  Planes: 'Planes',
-  Socios: 'Socios',
-  SesionesEntrenamiento: 'SesionesEntrenamiento',
-  Usuario: 'Usuario'
+  Usuario: 'Usuario',
+  Plan: 'Plan',
+  Socio: 'Socio',
+  Membresia: 'Membresia',
+  SesionEntrenamiento: 'SesionEntrenamiento'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -74,62 +74,67 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const AdquisicionDePlanScalarFieldEnum = {
-  id: 'id',
-  fecha_inicio: 'fecha_inicio',
-  fecha_fin: 'fecha_fin',
-  socioId: 'socioId',
-  planId: 'planId'
-} as const
-
-export type AdquisicionDePlanScalarFieldEnum = (typeof AdquisicionDePlanScalarFieldEnum)[keyof typeof AdquisicionDePlanScalarFieldEnum]
-
-
-export const PlanesScalarFieldEnum = {
-  id: 'id',
-  nombre: 'nombre',
-  descripcion: 'descripcion',
-  estado: 'estado',
-  creadoEn: 'creadoEn'
-} as const
-
-export type PlanesScalarFieldEnum = (typeof PlanesScalarFieldEnum)[keyof typeof PlanesScalarFieldEnum]
-
-
-export const SociosScalarFieldEnum = {
+export const UsuarioScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
   apellido: 'apellido',
   email: 'email',
-  telefono: 'telefono',
-  fechaNacimiento: 'fechaNacimiento',
-  direccion: 'direccion',
-  fechaRegistro: 'fechaRegistro'
-} as const
-
-export type SociosScalarFieldEnum = (typeof SociosScalarFieldEnum)[keyof typeof SociosScalarFieldEnum]
-
-
-export const SesionesEntrenamientoScalarFieldEnum = {
-  id: 'id',
-  fechaHora: 'fechaHora',
-  estado: 'estado',
-  socioId: 'socioId'
-} as const
-
-export type SesionesEntrenamientoScalarFieldEnum = (typeof SesionesEntrenamientoScalarFieldEnum)[keyof typeof SesionesEntrenamientoScalarFieldEnum]
-
-
-export const UsuarioScalarFieldEnum = {
-  id: 'id',
-  nombre: 'nombre',
-  email: 'email',
   passwordHash: 'passwordHash',
   rol: 'rol',
+  estado: 'estado',
   creadoEn: 'creadoEn'
 } as const
 
 export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
+
+
+export const PlanScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  precioMes: 'precioMes',
+  estado: 'estado'
+} as const
+
+export type PlanScalarFieldEnum = (typeof PlanScalarFieldEnum)[keyof typeof PlanScalarFieldEnum]
+
+
+export const SocioScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  apellido: 'apellido',
+  telefono: 'telefono',
+  email: 'email',
+  estado: 'estado',
+  fechaNacimiento: 'fechaNacimiento',
+  creadoEn: 'creadoEn'
+} as const
+
+export type SocioScalarFieldEnum = (typeof SocioScalarFieldEnum)[keyof typeof SocioScalarFieldEnum]
+
+
+export const MembresiaScalarFieldEnum = {
+  id: 'id',
+  socioId: 'socioId',
+  planId: 'planId',
+  fechaInicio: 'fechaInicio',
+  fechaFin: 'fechaFin',
+  precioPagado: 'precioPagado',
+  estado: 'estado'
+} as const
+
+export type MembresiaScalarFieldEnum = (typeof MembresiaScalarFieldEnum)[keyof typeof MembresiaScalarFieldEnum]
+
+
+export const SesionEntrenamientoScalarFieldEnum = {
+  id: 'id',
+  socioId: 'socioId',
+  entrenadorId: 'entrenadorId',
+  fechaHora: 'fechaHora',
+  estado: 'estado'
+} as const
+
+export type SesionEntrenamientoScalarFieldEnum = (typeof SesionEntrenamientoScalarFieldEnum)[keyof typeof SesionEntrenamientoScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -1,11 +1,7 @@
 import { Router } from "express";
-
 import { planesController } from "../controllers/planesController.js";
-
 import { validatePlan } from "../middlewares/validarPlan.js";
-
 import { verificarToken } from "../middlewares/authMiddleware.js";
-
 import { autorizar } from "../middlewares/authRolMiddleware.js";
 
 const router = Router();
@@ -13,7 +9,7 @@ const router = Router();
 router.post(
   "/",
   verificarToken,
-  autorizar("RECEPCIONISTA"),
+  autorizar("ADMINISTRACION"),
   validatePlan,
   planesController.create,
 );
@@ -21,21 +17,21 @@ router.post(
 router.get(
   "/",
   verificarToken,
-  autorizar("RECEPCIONISTA"),
+  autorizar("RECEPCION"),
   planesController.getAll,
 );
 
 router.get(
   "/:id",
   verificarToken,
-  autorizar("RECEPCIONISTA"),
+  autorizar("RECEPCION"),
   planesController.getById,
 );
 
 router.put(
   "/:id",
   verificarToken,
-  autorizar("RECEPCIONISTA"),
+  autorizar("ADMINISTRACION"),
   validatePlan,
   planesController.update,
 );
@@ -43,7 +39,7 @@ router.put(
 router.delete(
   "/:id",
   verificarToken,
-  autorizar("RECEPCIONISTA"),
+  autorizar("ADMINISTRACION"),
   planesController.delete,
 );
 

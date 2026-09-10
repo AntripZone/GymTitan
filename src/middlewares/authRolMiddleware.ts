@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import type { Rol } from "./authMiddleware";
+import type { Rol } from "../generated/prisma/enums.js";
 
 export function autorizar(...roles: Rol[]) {
   return (req: Request, res: Response, next: NextFunction) => {

@@ -108,7 +108,6 @@ export const planesController = {
       });
     }
   },
-
   update: async (req: Request, res: Response) => {
     try {
       /*

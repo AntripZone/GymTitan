@@ -8,9 +8,9 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/AdquisicionDePlan'
-export type * from './models/Planes'
-export type * from './models/Socios'
-export type * from './models/SesionesEntrenamiento'
 export type * from './models/Usuario'
+export type * from './models/Plan'
+export type * from './models/Socio'
+export type * from './models/Membresia'
+export type * from './models/SesionEntrenamiento'
 export type * from './commonInputTypes'

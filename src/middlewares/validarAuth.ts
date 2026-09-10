@@ -1,14 +1,18 @@
 import type { Request, Response, NextFunction } from "express";
 import { z } from "zod";
+import { Rol } from "../generated/prisma/enums.js";
 
 export const registroSchema = z.object({
+  nombre: z.string().trim().min(1, "El nombre es obligatorio").max(255),
+  apellido: z.string().trim().min(1, "El apellido es obligatorio").max(255),
   email: z
     .string()
     .trim()
+    .max(150, "El correo es demasiado largo")
     .pipe(z.email("El correo no tiene un formato valido")),
   password: z.string().min(8, "La contraseña debe tener al menos 8 caracteres"),
-  rol: z.enum(["RECEPCIONISTA", "MEDICO", "GERENCIA"], {
-    message: "El rol debe ser RECEPCIONISTA, MEDICO O GERENCIA",
+  rol: z.enum(Rol, {
+    message: "El rol debe ser ADMINISTRACION, RECEPCION o ENTRENADOR",
   }),
 });
 

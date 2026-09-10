@@ -37,27 +37,33 @@ export type UsuarioSumAggregateOutputType = {
 export type UsuarioMinAggregateOutputType = {
   id: number | null
   nombre: string | null
+  apellido: string | null
   email: string | null
   passwordHash: string | null
   rol: $Enums.Rol | null
+  estado: boolean | null
   creadoEn: Date | null
 }
 
 export type UsuarioMaxAggregateOutputType = {
   id: number | null
   nombre: string | null
+  apellido: string | null
   email: string | null
   passwordHash: string | null
   rol: $Enums.Rol | null
+  estado: boolean | null
   creadoEn: Date | null
 }
 
 export type UsuarioCountAggregateOutputType = {
   id: number
   nombre: number
+  apellido: number
   email: number
   passwordHash: number
   rol: number
+  estado: number
   creadoEn: number
   _all: number
 }
@@ -74,27 +80,33 @@ export type UsuarioSumAggregateInputType = {
 export type UsuarioMinAggregateInputType = {
   id?: true
   nombre?: true
+  apellido?: true
   email?: true
   passwordHash?: true
   rol?: true
+  estado?: true
   creadoEn?: true
 }
 
 export type UsuarioMaxAggregateInputType = {
   id?: true
   nombre?: true
+  apellido?: true
   email?: true
   passwordHash?: true
   rol?: true
+  estado?: true
   creadoEn?: true
 }
 
 export type UsuarioCountAggregateInputType = {
   id?: true
   nombre?: true
+  apellido?: true
   email?: true
   passwordHash?: true
   rol?: true
+  estado?: true
   creadoEn?: true
   _all?: true
 }
@@ -188,9 +200,11 @@ export type UsuarioGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type UsuarioGroupByOutputType = {
   id: number
   nombre: string
+  apellido: string
   email: string
   passwordHash: string
   rol: $Enums.Rol
+  estado: boolean
   creadoEn: Date
   _count: UsuarioCountAggregateOutputType | null
   _avg: UsuarioAvgAggregateOutputType | null
@@ -220,19 +234,25 @@ export type UsuarioWhereInput = {
   NOT?: Prisma.UsuarioWhereInput | Prisma.UsuarioWhereInput[]
   id?: Prisma.IntFilter<"Usuario"> | number
   nombre?: Prisma.StringFilter<"Usuario"> | string
+  apellido?: Prisma.StringFilter<"Usuario"> | string
   email?: Prisma.StringFilter<"Usuario"> | string
   passwordHash?: Prisma.StringFilter<"Usuario"> | string
   rol?: Prisma.EnumRolFilter<"Usuario"> | $Enums.Rol
+  estado?: Prisma.BoolFilter<"Usuario"> | boolean
   creadoEn?: Prisma.DateTimeFilter<"Usuario"> | Date | string
+  sesionesEntrenamiento?: Prisma.SesionEntrenamientoListRelationFilter
 }
 
 export type UsuarioOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
+  apellido?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   rol?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
   creadoEn?: Prisma.SortOrder
+  sesionesEntrenamiento?: Prisma.SesionEntrenamientoOrderByRelationAggregateInput
 }
 
 export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
@@ -242,17 +262,22 @@ export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UsuarioWhereInput[]
   NOT?: Prisma.UsuarioWhereInput | Prisma.UsuarioWhereInput[]
   nombre?: Prisma.StringFilter<"Usuario"> | string
+  apellido?: Prisma.StringFilter<"Usuario"> | string
   passwordHash?: Prisma.StringFilter<"Usuario"> | string
   rol?: Prisma.EnumRolFilter<"Usuario"> | $Enums.Rol
+  estado?: Prisma.BoolFilter<"Usuario"> | boolean
   creadoEn?: Prisma.DateTimeFilter<"Usuario"> | Date | string
+  sesionesEntrenamiento?: Prisma.SesionEntrenamientoListRelationFilter
 }, "id" | "email">
 
 export type UsuarioOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
+  apellido?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   rol?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
   creadoEn?: Prisma.SortOrder
   _count?: Prisma.UsuarioCountOrderByAggregateInput
   _avg?: Prisma.UsuarioAvgOrderByAggregateInput
@@ -267,78 +292,100 @@ export type UsuarioScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UsuarioScalarWhereWithAggregatesInput | Prisma.UsuarioScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Usuario"> | number
   nombre?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
+  apellido?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
   email?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
   rol?: Prisma.EnumRolWithAggregatesFilter<"Usuario"> | $Enums.Rol
+  estado?: Prisma.BoolWithAggregatesFilter<"Usuario"> | boolean
   creadoEn?: Prisma.DateTimeWithAggregatesFilter<"Usuario"> | Date | string
 }
 
 export type UsuarioCreateInput = {
   nombre: string
+  apellido: string
   email: string
   passwordHash: string
   rol: $Enums.Rol
+  estado?: boolean
   creadoEn?: Date | string
+  sesionesEntrenamiento?: Prisma.SesionEntrenamientoCreateNestedManyWithoutEntrenadorInput
 }
 
 export type UsuarioUncheckedCreateInput = {
   id?: number
   nombre: string
+  apellido: string
   email: string
   passwordHash: string
   rol: $Enums.Rol
+  estado?: boolean
   creadoEn?: Date | string
+  sesionesEntrenamiento?: Prisma.SesionEntrenamientoUncheckedCreateNestedManyWithoutEntrenadorInput
 }
 
 export type UsuarioUpdateInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  apellido?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolFieldUpdateOperationsInput | $Enums.Rol
+  estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creadoEn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sesionesEntrenamiento?: Prisma.SesionEntrenamientoUpdateManyWithoutEntrenadorNestedInput
 }
 
 export type UsuarioUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  apellido?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolFieldUpdateOperationsInput | $Enums.Rol
+  estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creadoEn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sesionesEntrenamiento?: Prisma.SesionEntrenamientoUncheckedUpdateManyWithoutEntrenadorNestedInput
 }
 
 export type UsuarioCreateManyInput = {
   id?: number
   nombre: string
+  apellido: string
   email: string
   passwordHash: string
   rol: $Enums.Rol
+  estado?: boolean
   creadoEn?: Date | string
 }
 
 export type UsuarioUpdateManyMutationInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  apellido?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolFieldUpdateOperationsInput | $Enums.Rol
+  estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creadoEn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UsuarioUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  apellido?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolFieldUpdateOperationsInput | $Enums.Rol
+  estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creadoEn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UsuarioCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
+  apellido?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   rol?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
   creadoEn?: Prisma.SortOrder
 }
 
@@ -349,18 +396,22 @@ export type UsuarioAvgOrderByAggregateInput = {
 export type UsuarioMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
+  apellido?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   rol?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
   creadoEn?: Prisma.SortOrder
 }
 
 export type UsuarioMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
+  apellido?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   rol?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
   creadoEn?: Prisma.SortOrder
 }
 
@@ -368,59 +419,205 @@ export type UsuarioSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
+export type UsuarioScalarRelationFilter = {
+  is?: Prisma.UsuarioWhereInput
+  isNot?: Prisma.UsuarioWhereInput
+}
+
+export type StringFieldUpdateOperationsInput = {
+  set?: string
+}
+
 export type EnumRolFieldUpdateOperationsInput = {
   set?: $Enums.Rol
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type UsuarioCreateNestedOneWithoutSesionesEntrenamientoInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutSesionesEntrenamientoInput, Prisma.UsuarioUncheckedCreateWithoutSesionesEntrenamientoInput>
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutSesionesEntrenamientoInput
+  connect?: Prisma.UsuarioWhereUniqueInput
+}
+
+export type UsuarioUpdateOneRequiredWithoutSesionesEntrenamientoNestedInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutSesionesEntrenamientoInput, Prisma.UsuarioUncheckedCreateWithoutSesionesEntrenamientoInput>
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutSesionesEntrenamientoInput
+  upsert?: Prisma.UsuarioUpsertWithoutSesionesEntrenamientoInput
+  connect?: Prisma.UsuarioWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UsuarioUpdateToOneWithWhereWithoutSesionesEntrenamientoInput, Prisma.UsuarioUpdateWithoutSesionesEntrenamientoInput>, Prisma.UsuarioUncheckedUpdateWithoutSesionesEntrenamientoInput>
+}
+
+export type UsuarioCreateWithoutSesionesEntrenamientoInput = {
+  nombre: string
+  apellido: string
+  email: string
+  passwordHash: string
+  rol: $Enums.Rol
+  estado?: boolean
+  creadoEn?: Date | string
+}
+
+export type UsuarioUncheckedCreateWithoutSesionesEntrenamientoInput = {
+  id?: number
+  nombre: string
+  apellido: string
+  email: string
+  passwordHash: string
+  rol: $Enums.Rol
+  estado?: boolean
+  creadoEn?: Date | string
+}
+
+export type UsuarioCreateOrConnectWithoutSesionesEntrenamientoInput = {
+  where: Prisma.UsuarioWhereUniqueInput
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutSesionesEntrenamientoInput, Prisma.UsuarioUncheckedCreateWithoutSesionesEntrenamientoInput>
+}
+
+export type UsuarioUpsertWithoutSesionesEntrenamientoInput = {
+  update: Prisma.XOR<Prisma.UsuarioUpdateWithoutSesionesEntrenamientoInput, Prisma.UsuarioUncheckedUpdateWithoutSesionesEntrenamientoInput>
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutSesionesEntrenamientoInput, Prisma.UsuarioUncheckedCreateWithoutSesionesEntrenamientoInput>
+  where?: Prisma.UsuarioWhereInput
+}
+
+export type UsuarioUpdateToOneWithWhereWithoutSesionesEntrenamientoInput = {
+  where?: Prisma.UsuarioWhereInput
+  data: Prisma.XOR<Prisma.UsuarioUpdateWithoutSesionesEntrenamientoInput, Prisma.UsuarioUncheckedUpdateWithoutSesionesEntrenamientoInput>
+}
+
+export type UsuarioUpdateWithoutSesionesEntrenamientoInput = {
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolFieldUpdateOperationsInput | $Enums.Rol
+  estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creadoEn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UsuarioUncheckedUpdateWithoutSesionesEntrenamientoInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolFieldUpdateOperationsInput | $Enums.Rol
+  estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creadoEn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type UsuarioCountOutputType
+ */
+
+export type UsuarioCountOutputType = {
+  sesionesEntrenamiento: number
+}
+
+export type UsuarioCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  sesionesEntrenamiento?: boolean | UsuarioCountOutputTypeCountSesionesEntrenamientoArgs
+}
+
+/**
+ * UsuarioCountOutputType without action
+ */
+export type UsuarioCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UsuarioCountOutputType
+   */
+  select?: Prisma.UsuarioCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UsuarioCountOutputType without action
+ */
+export type UsuarioCountOutputTypeCountSesionesEntrenamientoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SesionEntrenamientoWhereInput
+}
 
 
 export type UsuarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   nombre?: boolean
+  apellido?: boolean
   email?: boolean
   passwordHash?: boolean
   rol?: boolean
+  estado?: boolean
   creadoEn?: boolean
+  sesionesEntrenamiento?: boolean | Prisma.Usuario$sesionesEntrenamientoArgs<ExtArgs>
+  _count?: boolean | Prisma.UsuarioCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["usuario"]>
 
 export type UsuarioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   nombre?: boolean
+  apellido?: boolean
   email?: boolean
   passwordHash?: boolean
   rol?: boolean
+  estado?: boolean
   creadoEn?: boolean
 }, ExtArgs["result"]["usuario"]>
 
 export type UsuarioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   nombre?: boolean
+  apellido?: boolean
   email?: boolean
   passwordHash?: boolean
   rol?: boolean
+  estado?: boolean
   creadoEn?: boolean
 }, ExtArgs["result"]["usuario"]>
 
 export type UsuarioSelectScalar = {
   id?: boolean
   nombre?: boolean
+  apellido?: boolean
   email?: boolean
   passwordHash?: boolean
   rol?: boolean
+  estado?: boolean
   creadoEn?: boolean
 }
 
-export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "email" | "passwordHash" | "rol" | "creadoEn", ExtArgs["result"]["usuario"]>
+export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "apellido" | "email" | "passwordHash" | "rol" | "estado" | "creadoEn", ExtArgs["result"]["usuario"]>
+export type UsuarioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  sesionesEntrenamiento?: boolean | Prisma.Usuario$sesionesEntrenamientoArgs<ExtArgs>
+  _count?: boolean | Prisma.UsuarioCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UsuarioIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $UsuarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Usuario"
-  objects: {}
+  objects: {
+    sesionesEntrenamiento: Prisma.$SesionEntrenamientoPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     nombre: string
+    apellido: string
     email: string
     passwordHash: string
     rol: $Enums.Rol
+    estado: boolean
     creadoEn: Date
   }, ExtArgs["result"]["usuario"]>
   composites: {}
@@ -816,6 +1013,7 @@ readonly fields: UsuarioFieldRefs;
  */
 export interface Prisma__UsuarioClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  sesionesEntrenamiento<T extends Prisma.Usuario$sesionesEntrenamientoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$sesionesEntrenamientoArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SesionEntrenamientoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -847,9 +1045,11 @@ export interface Prisma__UsuarioClient<T, Null = never, ExtArgs extends runtime.
 export interface UsuarioFieldRefs {
   readonly id: Prisma.FieldRef<"Usuario", 'Int'>
   readonly nombre: Prisma.FieldRef<"Usuario", 'String'>
+  readonly apellido: Prisma.FieldRef<"Usuario", 'String'>
   readonly email: Prisma.FieldRef<"Usuario", 'String'>
   readonly passwordHash: Prisma.FieldRef<"Usuario", 'String'>
   readonly rol: Prisma.FieldRef<"Usuario", 'Rol'>
+  readonly estado: Prisma.FieldRef<"Usuario", 'Boolean'>
   readonly creadoEn: Prisma.FieldRef<"Usuario", 'DateTime'>
 }
     
@@ -867,6 +1067,10 @@ export type UsuarioFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the Usuario
    */
   omit?: Prisma.UsuarioOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UsuarioInclude<ExtArgs> | null
   /**
    * Filter, which Usuario to fetch.
    */
@@ -886,6 +1090,10 @@ export type UsuarioFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.UsuarioOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UsuarioInclude<ExtArgs> | null
+  /**
    * Filter, which Usuario to fetch.
    */
   where: Prisma.UsuarioWhereUniqueInput
@@ -903,6 +1111,10 @@ export type UsuarioFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Usuario
    */
   omit?: Prisma.UsuarioOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UsuarioInclude<ExtArgs> | null
   /**
    * Filter, which Usuario to fetch.
    */
@@ -952,6 +1164,10 @@ export type UsuarioFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.UsuarioOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UsuarioInclude<ExtArgs> | null
+  /**
    * Filter, which Usuario to fetch.
    */
   where?: Prisma.UsuarioWhereInput
@@ -999,6 +1215,10 @@ export type UsuarioFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Usuario
    */
   omit?: Prisma.UsuarioOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UsuarioInclude<ExtArgs> | null
   /**
    * Filter, which Usuarios to fetch.
    */
@@ -1048,6 +1268,10 @@ export type UsuarioCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.UsuarioOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UsuarioInclude<ExtArgs> | null
+  /**
    * The data needed to create a Usuario.
    */
   data: Prisma.XOR<Prisma.UsuarioCreateInput, Prisma.UsuarioUncheckedCreateInput>
@@ -1095,6 +1319,10 @@ export type UsuarioUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Usuario
    */
   omit?: Prisma.UsuarioOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UsuarioInclude<ExtArgs> | null
   /**
    * The data needed to update a Usuario.
    */
@@ -1162,6 +1390,10 @@ export type UsuarioUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.UsuarioOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UsuarioInclude<ExtArgs> | null
+  /**
    * The filter to search for the Usuario to update in case it exists.
    */
   where: Prisma.UsuarioWhereUniqueInput
@@ -1188,6 +1420,10 @@ export type UsuarioDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.UsuarioOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UsuarioInclude<ExtArgs> | null
+  /**
    * Filter which Usuario to delete.
    */
   where: Prisma.UsuarioWhereUniqueInput
@@ -1208,6 +1444,30 @@ export type UsuarioDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Usuario.sesionesEntrenamiento
+ */
+export type Usuario$sesionesEntrenamientoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SesionEntrenamiento
+   */
+  select?: Prisma.SesionEntrenamientoSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SesionEntrenamiento
+   */
+  omit?: Prisma.SesionEntrenamientoOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SesionEntrenamientoInclude<ExtArgs> | null
+  where?: Prisma.SesionEntrenamientoWhereInput
+  orderBy?: Prisma.SesionEntrenamientoOrderByWithRelationInput | Prisma.SesionEntrenamientoOrderByWithRelationInput[]
+  cursor?: Prisma.SesionEntrenamientoWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SesionEntrenamientoScalarFieldEnum | Prisma.SesionEntrenamientoScalarFieldEnum[]
+}
+
+/**
  * Usuario without action
  */
 export type UsuarioDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1219,4 +1479,8 @@ export type UsuarioDefaultArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Usuario
    */
   omit?: Prisma.UsuarioOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UsuarioInclude<ExtArgs> | null
 }

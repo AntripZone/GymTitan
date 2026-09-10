@@ -12,73 +12,96 @@ datasource db {
   provider = "postgresql"
 }
 
-enum EstadoSocio {
+enum Rol {
+  ADMINISTRACION
+  RECEPCION
+  ENTRENADOR
+}
+
+enum EstadoMembresia {
+  ACTIVA
+  SUSPENDIDA
+}
+
+enum EstadoSesion {
+  PROGRAMADA
   ASISTIO
   FALTO
 }
 
-enum Rol {
-  RECEPCIONISTA
-  ENTRENADORES
-  ADMINISTRACION
+model Usuario {
+  id        Int    @id @default(autoincrement())
+  nombre    String
+  apellido  String
+  email     String @unique
+  passwordHash  String
+  rol       Rol
+  estado       Boolean  @default(true)
+  creadoEn DateTime @default(now()) @map("creado_en")
+
+  sesionesEntrenamiento SesionEntrenamiento[] @relation(name: "EntrenadorSesiones")
+
+  @@map("usuarios")
 }
 
-model AdquisicionDePlan {
+model Plan {
   id           Int      @id @default(autoincrement())
-  fecha_inicio DateTime @map("fecha_inicio")
-  fecha_fin    DateTime @map("fecha_fin")
+  nombre       String
+  descripcion  String?
+  precioMes    Decimal  @map("precio_mes")  @db.Decimal(10,2)
+  estado Boolean @default(true)
 
-  socioId Int    @map("socio_Id")
-  socio   Socios @relation(fields: [socioId], references: [id], onDelete: Cascade)
+  membresias Membresia[]
 
-  planId Int    @map("planes_Id")
-  plan   Planes @relation(fields: [planId], references: [id], onDelete: Cascade)
+  @@map("planes")
 }
 
-model Planes {
-  id                 Int                 @id @default(autoincrement())
-  nombre             String              @db.VarChar(100)
-  descripcion        String              @db.VarChar(100)
-  estado             String              @default("Activo")
-  creadoEn           DateTime            @default(now()) @map("creado_en")
-  adquisicionDePlans AdquisicionDePlan[]
-}
+model Socio {
+  id              Int      @id @default(autoincrement())
+  nombre          String
+  apellido        String
+  telefono        String?
+  email           String?  @unique
+  estado          Boolean  @default(true)
+  fechaNacimiento DateTime? @map("fecha_nacimiento")
+  creadoEn        DateTime @default(now()) @map("creado_en")
 
-model Socios {
-  id                     Int                     @id @default(autoincrement())
-  nombre                 String                  @db.VarChar(100)
-  apellido               String                  @db.VarChar(100)
-  email                  String                  @unique @db.VarChar(150)
-  telefono               String                  @db.VarChar(20)
-  fechaNacimiento        DateTime                @map("fecha_nacimiento") @db.Date
-  direccion              String?                 @db.VarChar(255)
-  fechaRegistro          DateTime                @default(now()) @map("fecha_registro")
-  adquisicionDePlans     AdquisicionDePlan[]
-  sesionesEntrenamientos SesionesEntrenamiento[]
+  membresias            Membresia[]
+  sesionesEntrenamiento SesionEntrenamiento[]
 
   @@map("socios")
 }
 
-model SesionesEntrenamiento {
-  id        Int         @id @default(autoincrement())
-  fechaHora DateTime    @map("fecha_hora")
-  estado    EstadoSocio
+model Membresia {
+  id           Int      @id @default(autoincrement())
+  socioId      Int
+  planId       Int
+  fechaInicio  DateTime
+  fechaFin     DateTime
+  precioPagado Decimal  @db.Decimal(10, 2)
+  estado       EstadoMembresia @default(ACTIVA)
 
-  socioId Int    @map("socio_Id")
-  socio   Socios @relation(fields: [socioId], references: [id], onDelete: Cascade)
+  socio Socio @relation(fields: [socioId], references: [id])
+  plan  Plan  @relation(fields: [planId], references: [id])
 
-  // Evita doble reserva del mismo socio en el mismo horario
-  @@unique([socioId, fechaHora])
-  // Agenda del socio por rango de fechas
-  @@index([socioId, fechaHora])
-  @@map("sesionesEntrenamiento")
+  @@index([socioId])
+  @@index([planId])
+  @@index([estado, fechaFin])
+  @@map("membresias")
 }
 
-model Usuario {
-  id           Int      @id @default(autoincrement())
-  nombre       String   @db.VarChar(255)
-  email        String   @unique @db.VarChar(150)
-  passwordHash String   @map("password_hash")
-  rol          Rol
-  creadoEn     DateTime @default(now()) @map("creado_en")
+model SesionEntrenamiento {
+  id           Int           @id @default(autoincrement())
+  socioId      Int           @map("socio_id")
+  entrenadorId Int           @map("entrenador_id")
+  fechaHora    DateTime      @map("fecha_hora")
+  estado       EstadoSesion @default(PROGRAMADA)
+
+  socio Socio @relation(fields: [socioId], references: [id], onDelete: Cascade)
+  entrenador Usuario @relation("EntrenadorSesiones", fields: [entrenadorId], references: [id])
+
+  @@unique([entrenadorId, fechaHora])
+  @@index([estado, fechaHora])
+  @@index([fechaHora])
+  @@map("sesiones_entrenamiento")
 }

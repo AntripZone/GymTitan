@@ -31,8 +31,8 @@ export * from "./enums"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more AdquisicionDePlans
- * const adquisicionDePlans = await prisma.adquisicionDePlan.findMany()
+ * // Fetch zero or more Usuarios
+ * const usuarios = await prisma.usuario.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -42,27 +42,27 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
- * Model AdquisicionDePlan
- * 
- */
-export type AdquisicionDePlan = Prisma.AdquisicionDePlanModel
-/**
- * Model Planes
- * 
- */
-export type Planes = Prisma.PlanesModel
-/**
- * Model Socios
- * 
- */
-export type Socios = Prisma.SociosModel
-/**
- * Model SesionesEntrenamiento
- * 
- */
-export type SesionesEntrenamiento = Prisma.SesionesEntrenamientoModel
-/**
  * Model Usuario
  * 
  */
 export type Usuario = Prisma.UsuarioModel
+/**
+ * Model Plan
+ * 
+ */
+export type Plan = Prisma.PlanModel
+/**
+ * Model Socio
+ * 
+ */
+export type Socio = Prisma.SocioModel
+/**
+ * Model Membresia
+ * 
+ */
+export type Membresia = Prisma.MembresiaModel
+/**
+ * Model SesionEntrenamiento
+ * 
+ */
+export type SesionEntrenamiento = Prisma.SesionEntrenamientoModel
