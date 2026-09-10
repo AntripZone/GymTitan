@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { sesionEntrenamientoModel } from "../models/sesionesEntrenamientoModels.js";
+import { prisma } from "../config/prisma";
 
 export const getAll = async (req: Request, res: Response): Promise<void> => {
   /*
@@ -56,6 +57,29 @@ export const create = async (req: Request, res: Response): Promise<void> => {
   */
   try {
     const { socioId, entrenadorId, fechaHora } = req.body;
+
+    const socio = await prisma.socio.findUnique({
+      where: {
+        id: socioId,
+      },
+    });
+    if (!socio) {
+      res.status(404).json({
+        message: "El socio no existe",
+      });
+      return;
+    }
+    const entrenador = await prisma.usuario.findUnique({
+      where: {
+        id: entrenadorId,
+      },
+    });
+    if (!entrenador) {
+      res.status(404).json({
+        message: "El entrenador no existe",
+      });
+      return;
+    }
 
     const sesion = await sesionEntrenamientoModel.create({
       socioId,
